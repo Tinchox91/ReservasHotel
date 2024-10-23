@@ -164,19 +164,12 @@ namespace HotelFinal
             nombreHuesped = Console.ReadLine();
             Console.ResetColor();
             Console.Write("Ingrese el DNI del huésped: ");
-            bool valIngreso = true;
-
+            bool valIngreso = true;            
             do
             {
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 string ingresoDni = Console.ReadLine();
-
-                valIngreso = long.TryParse(ingresoDni, out dni);
-                if (!valIngreso)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Ingreso invalido! vuelva a ingresar:");
-                }
+              valIngreso=  validacionLong(ingresoDni,dni);
             } while (!valIngreso);//validacion de ingreso long (DNI)
 
             Console.ResetColor();
@@ -789,37 +782,55 @@ namespace HotelFinal
         {
             ReservasStruct reservaModificacada = new ReservasStruct();
             mostrarReservas();
-            Console.Write("Indica el numero del ID de la reserva que desea Modificar: ");
-            int idR = int.Parse(Console.ReadLine());
-
-            foreach (var re in reservas)
+            Console.ResetColor();
+            Console.Write("Indica el numero del ID de la reserva que desea Modificar: ");           
+            bool valIngreso = true;
+            bool idEncontrado = true;
+            long idIngresado=0;
+            do
             {
-                if (re.IdReserva == idR)
+                do
                 {
-                    reservaModificacada = re;
-
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    string ingresoDni = Console.ReadLine();
+                    valIngreso = validacionLong(ingresoDni, idIngresado);
+                } while (!valIngreso);//validacion de ingreso long (DNI)
+                foreach (var re in reservas)
+                {
+                    if (re.IdReserva == idIngresado)
+                    {
+                        reservaModificacada = re;
+                        idEncontrado = true;
+                    }
+                    else 
+                    {
+                        idEncontrado = false;
+                    }
                 }
-            }
+                if (!idEncontrado)
+                {
+                    Console.ForegroundColor= ConsoleColor.Red;
+                    Console.WriteLine("El Id no se encuentra...Vuelva a intentar: ");
+                    Console.ResetColor();
+                }
+            } while (!idEncontrado);                 
             string[] opciones = new string[]
             {
-
                 "1. Numero de Habitacion",
                 "2. Check-in",
                 "5. Cantidad de noches",
-
-
             };
             menuOpciones("Elija que quiere modificar:", opciones);
             int elegirOpcion = int.Parse(Console.ReadLine());
             switch (elegirOpcion)
             {
                 case 1:
-                    Console.Write($"{reservaModificacada.NumeroHabitacion} Nuevo Dato:");
+                    Console.Write($"Numero de Habitacion: {reservaModificacada.NumeroHabitacion+1} Nuevo Dato: ");
                     reservaModificacada.NumeroHabitacion = int.Parse(Console.ReadLine());
                     break;
                 case 2:
-                    Console.Write($"{reservaModificacada.CheckIn} Nuevo Dato:");
-
+                    Console.Write($"Fecha de entrada: {reservaModificacada.CheckIn} Nuevo Dato: ");
+                    //reservaModificacada.CheckIn.Day = int.Parse(Console.ReadLine());
                     break;
                 default:
                     break;
@@ -829,6 +840,24 @@ namespace HotelFinal
 
 
             Console.ResetColor();
+        }
+        static bool validacionLong(string ingreso,long dato)
+        {
+            bool validacion ;
+
+            
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                string ingresoDni = Console.ReadLine();
+
+                validacion = long.TryParse(ingreso, out dato);
+                if (!validacion)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Ingreso invalido! vuelva a ingresar:");
+                return false;
+                }
+            return true;
+           
         }
 
     }
