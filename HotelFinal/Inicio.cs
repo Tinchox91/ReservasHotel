@@ -832,6 +832,9 @@ namespace HotelFinal
                     Console.Write($"Fecha de entrada: {reservaModificacada.CheckIn} Nuevo Dato: ");
                     //reservaModificacada.CheckIn.Day = int.Parse(Console.ReadLine());
                     break;
+                case 3:
+                    Console.Write($"Cantidad de noches: {reservaModificacada.CantidadNoches} Nuevo Dato: ");
+                    break;
                 default:
                     break;
             }
