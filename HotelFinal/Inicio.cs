@@ -544,7 +544,7 @@ namespace HotelFinal
                     
             }
 
-            for (int i = diaa; i < diaa + cantidadNoches; i++)
+            for (int i = diaa - 1; i < (diaa-1) + cantidadNoches; i++)
             {
                 if (i > mesElejido.GetLength(0) || mesElejido[i - 1, habitacion - 1]) // Día fuera de rango o habitación ocupada
                 {
@@ -564,7 +564,7 @@ namespace HotelFinal
         {
            
 
-            for (int i = diaa; i < diaa + cantidadNoches; i++)
+            for (int i = diaa-1; i < diaa-1 + cantidadNoches; i++)
             {
                 if (i > mess.GetLength(0) || mess[i - 1, habitacion - 1]) // Día fuera de rango o habitación ocupada
                 {
@@ -573,7 +573,7 @@ namespace HotelFinal
             }
 
             // Si pasa la validación, se marcan los días como ocupados
-            for (int i = diaa; i < diaa + cantidadNoches; i++)
+            for (int i = diaa-1; i < (diaa-1) + cantidadNoches; i++)
             {
                 mess[i - 1, habitacion - 1] = true;
             }
@@ -597,7 +597,7 @@ namespace HotelFinal
                 bool disponible = true;
 
                 // Verifica si la habitación está disponible en todos los días solicitados
-                for (int d = diaa; d < diaa + cantidadNoches; d++)
+                for (int d = diaa-1; d < (diaa-1) + cantidadNoches; d++)
                 {
                     if (d >= mess.GetLength(0) || mess[d - 1, h]) // Día fuera de rango o habitación ocupada
                     {
@@ -919,7 +919,7 @@ namespace HotelFinal
                         valIngreso = validacionLong(ingresoDni, out idIngresado);
                     } while (!valIngreso);//validacion de ingreso long (DNI)
                     idEncontrado = false;
-                    for (int i = 0; i < reservas.Count - 1; i++)
+                    for (int i = 0; i < reservas.Count; i++)
                     {
 
                         if (reservas[i].IdReserva == idIngresado)
