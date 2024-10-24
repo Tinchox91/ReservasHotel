@@ -62,6 +62,7 @@ namespace HotelFinal
             // Bucle principal del menú
             do
             {
+                Console.Clear();
                 salida = MenuPrincipal();
             } while (salida); // Repite mientras no se elija la opción de salida
         }
