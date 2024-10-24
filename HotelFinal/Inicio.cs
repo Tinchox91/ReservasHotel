@@ -77,7 +77,8 @@ namespace HotelFinal
            "5. Buscar Reservas por Dni del Huesped",
            "6. Mostrar Reservas",
             "7. Mostrar Huespedes",
-            "8. Salir"
+            "8. Mostrar Disponibilidad",
+            "9.Salir"
         };
             Boolean salidaMenu = true;
             Console.ForegroundColor = ConsoleColor.White;
@@ -121,7 +122,12 @@ namespace HotelFinal
                     mostrarHuespedes(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
                     break;
-                case "8": salidaMenu = false; return salidaMenu; // Salida del menú
+                case "8":
+                    Console.Clear();
+                    mostrarDisponibilidad(); Console.WriteLine("Apriete cualquier tecla para continuar...");
+                    Console.ReadKey();
+                    break;
+                case "9": salidaMenu = false; return salidaMenu; // Salida del menú
                 default:
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -747,7 +753,7 @@ namespace HotelFinal
                         }
                     }
                 }
-
+                Console.WriteLine("Datos de las Reservas: ");
                 foreach (ReservasStruct res in reservas)
                 {
                     Console.WriteLine(" ");
@@ -1024,6 +1030,84 @@ namespace HotelFinal
             } while (!val);
             return dato;
         }
+      static void mostrarDisponibilidad()
+        {
+            Console.Clear();
+            string[] opciones = new string[]
+            {
+                "Octubre",
+                "Nobiembre",
+                "Diciembre"
+            };
+            menuOpciones("Elija el mes: ",opciones);
+            string entrada= Console.ReadLine();
+            int op;
+            validacionInt(entrada,out op);
+
+            switch (op)
+            {
+               case 1:dibujarCalendario(octubre); 
+                break;
+                case 2:
+                    dibujarCalendario(noviembre);
+                    break; 
+                case 3: dibujarCalendario(diciembre);
+                    break;
+                default: 
+                    Console.ForegroundColor= ConsoleColor.Red;
+                    Console.WriteLine("Opcion Invalida");
+                    Console.ResetColor();
+                    break;
+            }
+        }
+        static void dibujarCalendario(bool[,] mess)
+        {
+            char check = '\u2713';  // ✓
+            char cruz = 'X'; // ✗            
+            string tablaHab = " Hab 1  | Hab 2  | Hab 3  | Hab 4  |  Hab 5  | Hab 6  | Hab 7  | Hab 8  | Hab 9  | Hab 10 | ";
+            string tablaDia = " Dia || ";
+            string linea = repetirCaracter('_', tablaHab.Length + tablaDia.Length);
+
+            // Encabezado de tabla
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write(tablaDia);
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(tablaHab);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine(linea);
+            Console.ResetColor();
+
+            // Filas del calendario
+            for (int i = 0; i < mess.GetLength(0); i++)
+            {
+                // Dibuja el número de día
+                Console.Write("  " + (i + 1).ToString("D2")  + " ");                
+                for (int j = 0; j < mess.GetLength(1); j++)
+                {
+                    if (mess[i, j])
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write("      " + cruz + "  ");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.Write("      " + check + "  ");
+                    }
+                    Console.ResetColor();
+                }
+
+                Console.WriteLine(" ");  // Salta a la siguiente fila después de imprimir las habitaciones de un día
+            }
+        }
+
+        // Función auxiliar para crear líneas divisorias
+        static string repetirCaracter(char caracter, int longitud)
+        {
+            return new string(caracter, longitud);
+        }
+
+        
 
         //codigo terminado
 
