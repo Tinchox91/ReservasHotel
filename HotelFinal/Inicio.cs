@@ -55,8 +55,6 @@ namespace HotelFinal
         static bool[,] diciembre = new bool[31, 10]; // 31 días x 10 habitaciones para diciembre//Inicio:
         static void Main(string[] args)
         {
-
-
             inicializarArreglos();
             cargarDatosDefault();
             idReserva = reservas[reservas.Count-1].IdReserva;
@@ -348,7 +346,7 @@ namespace HotelFinal
         {
             int numeroNoches;
             bool validacionIngreso = int.TryParse(noche, out numeroNoches);
-            max = max - dia;
+            max = max - (dia-1);
             if (validacionIngreso)
             {
                 if (max - numeroNoches < 0 || numeroNoches > max || numeroNoches < 0)
