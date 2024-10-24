@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HotelFinal
@@ -58,6 +59,7 @@ namespace HotelFinal
 
             inicializarArreglos();
             cargarDatosDefault();
+            idReserva = reservas[reservas.Count-1].IdReserva;
 
             // Bucle principal del menú
             do
@@ -68,7 +70,9 @@ namespace HotelFinal
         }
         static Boolean MenuPrincipal()
         {
+            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
             Console.Clear();
+           
             string[] opciones = new string[] {
              "Elija la opción:",
             "1. Crear Reserva",
@@ -92,41 +96,49 @@ namespace HotelFinal
                     Console.Clear();
                     agregarReserva(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break; // Llama al método para agregar una reserva
                 case "2":
                     Console.Clear();
                     modificarReserva(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break; // Para implementar la modificación de reservas
                 case "3":
                     Console.Clear();
                     eliminarReserva(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break; // Para implementar la cancelación de reservas
                 case "4":
                     Console.Clear();
                     buscarHuespedDni(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break; // Para buscar reservas por nombre
                 case "5":
                     Console.Clear();
                     buscarReservasDni(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break; // Para listar reservas ordenadas
                 case "6":
                     Console.Clear();
                     mostrarReservas2(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break;
                 case "7":
                     Console.Clear();
                     mostrarHuespedes(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break;
                 case "8":
                     Console.Clear();
                     mostrarDisponibilidad(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
+                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break;
                 case "9": salidaMenu = false; return salidaMenu; // Salida del menú
                 default:
