@@ -10,6 +10,7 @@ namespace HotelFinal
 {
     internal class Inicio
     {
+        //Variables globales
         static string diaV, nombreHuesped, ingresoNoches = "", mail;
         static int habitacion, dia = 0, numeroHabitacion, idReserva = 0, cantNoches = 0;
         static long dni;
@@ -17,6 +18,7 @@ namespace HotelFinal
             valHabitacion = true, salida = true;
         static List<ReservasStruct> reservas = new List<ReservasStruct>();
         static List<huesped> huespedes = new List<huesped>();
+        // Se crean las dos estructuras para Reservas y Huespedes
         struct ReservasStruct
         {
             public int IdReserva;
@@ -55,7 +57,7 @@ namespace HotelFinal
         static bool[,] diciembre = new bool[31, 10]; // 31 días x 10 habitaciones para diciembre//Inicio:
         static void Main(string[] args)
         {
-            inicializarArreglos();
+            inicializarMeses();
             cargarDatosDefault();
             idReserva = reservas[reservas.Count-1].IdReserva;
 
@@ -66,11 +68,11 @@ namespace HotelFinal
                 salida = MenuPrincipal();
             } while (salida); // Repite mientras no se elija la opción de salida
         }
+        //Funcion para mostrar un menu y devuelve falso para salir del bucle
+       
         static Boolean MenuPrincipal()
-        {
-            Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
-            Console.Clear();
-           
+        {           
+            Console.Clear();           
             string[] opciones = new string[] {
              "Elija la opción:",
             "1. Crear Reserva",
@@ -87,56 +89,47 @@ namespace HotelFinal
             Console.ForegroundColor = ConsoleColor.White;
             menuOpciones("Hotel Genesis", opciones);
             string eleccion = Console.ReadLine();
-
             switch (eleccion)
             {
                 case "1":
                     Console.Clear();
                     agregarReserva(); Console.WriteLine("Apriete cualquier tecla para continuar...");
-                    Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+                    Console.ReadKey();                   
                     break; // Llama al método para agregar una reserva
                 case "2":
                     Console.Clear();
                     modificarReserva(); Console.WriteLine("Apriete cualquier tecla para continuar...");
                     Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
                     break; // Para implementar la modificación de reservas
                 case "3":
                     Console.Clear();
                     eliminarReserva(); Console.WriteLine("Apriete cualquier tecla para continuar...");
-                    Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+                    Console.ReadKey();                   
                     break; // Para implementar la cancelación de reservas
                 case "4":
                     Console.Clear();
                     buscarHuespedDni(); Console.WriteLine("Apriete cualquier tecla para continuar...");
-                    Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+                    Console.ReadKey();                    
                     break; // Para buscar reservas por nombre
                 case "5":
                     Console.Clear();
                     buscarReservasDni(); Console.WriteLine("Apriete cualquier tecla para continuar...");
-                    Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+                    Console.ReadKey();                   
                     break; // Para listar reservas ordenadas
                 case "6":
                     Console.Clear();
                     mostrarReservas2(); Console.WriteLine("Apriete cualquier tecla para continuar...");
-                    Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+                    Console.ReadKey();                    
                     break;
                 case "7":
                     Console.Clear();
                     mostrarHuespedes(); Console.WriteLine("Apriete cualquier tecla para continuar...");
-                    Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+                    Console.ReadKey();                   
                     break;
                 case "8":
                     Console.Clear();
                     mostrarDisponibilidad(); Console.WriteLine("Apriete cualquier tecla para continuar...");
-                    Console.ReadKey();
-                    Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+                    Console.ReadKey();                    
                     break;
                 case "9": salidaMenu = false; return salidaMenu; // Salida del menú
                 default:
@@ -151,6 +144,7 @@ namespace HotelFinal
             }
             return salidaMenu;
         }
+        //Funcion para centrar el texto del menu
         static string CentrarTexto(string texto, int longitudMaxima)
         {
             int espaciosTotales = longitudMaxima - texto.Length;   // Calcula los espacios que faltan para alinear
@@ -160,7 +154,8 @@ namespace HotelFinal
             // Usa PadRight para centrar el texto
             return new string(' ', espaciosIzquierda) + texto + new string(' ', espaciosDerecha).PadRight(espaciosDerecha);
         }
-        static void inicializarArreglos()
+        //Funcion que inicializa en libres todas las habitacion
+        static void inicializarMeses()
         {
 
             for (int i = 0; i < 30; i++)
@@ -250,6 +245,7 @@ namespace HotelFinal
                     break;
             }
         }
+        //Funcion que ejecuta el codigo para la reserva segun el mes que se elije en un menu
         static void segunMes(bool[,] mesSelect, int numeroMes, int catDiasMes, int mes)
         {                     
                         
@@ -342,6 +338,7 @@ namespace HotelFinal
                 }
             } while (!disponibilidad);
         }
+        //Funcion que valida el ingreso de la cantidad de noches
         static bool validarNoche(string noche, int max, int dia)
         {
             int numeroNoches;
@@ -349,7 +346,7 @@ namespace HotelFinal
             max = max - (dia-1);
             if (validacionIngreso)
             {
-                if (max - numeroNoches < 0 || numeroNoches > max || numeroNoches < 0)
+                if (max - numeroNoches < 0 || numeroNoches > max || numeroNoches <= 0)
                 {
                     validacionIngreso = false;
                 }
@@ -357,13 +354,14 @@ namespace HotelFinal
             }
             return validacionIngreso;
         }
+        //Funcion para validar el ingreso para el numero de habitacion
         static bool validarHabitacion(string ingresoHabitacion)
         {
             int numeroHabitacion = 0;
             bool valHabitacion = int.TryParse(ingresoHabitacion, out numeroHabitacion);
             if (valHabitacion)
             {
-                if (numeroHabitacion < 0 || numeroHabitacion > 10)
+                if (numeroHabitacion <= 0 || numeroHabitacion > 10)
                 {
                     valHabitacion = false;
                 }
@@ -372,6 +370,7 @@ namespace HotelFinal
             return valHabitacion;
 
         }
+        //Funcion para validar el ingreso del dia check-in
         static bool validarDia(string dia, int mes)
         {
             bool valDia = true;
@@ -430,6 +429,7 @@ namespace HotelFinal
             return valDia;
 
         }
+        //Funcion Para Dibujar Menu
         static void menuOpciones(string titulo, string[] opciones)
         {
 
@@ -461,7 +461,7 @@ namespace HotelFinal
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(borde);
             Console.ResetColor();
-        }//Funcion Para Dibujar Menu
+        }
         static void cargarDatosDefault()
         {
             // Cargar los huéspedes
@@ -527,6 +527,7 @@ namespace HotelFinal
                 }
             }
         }
+        //Funcion de sobrecarga que valida el numero de mes el rango de fechas ingresado para reservar
         static bool verificarDisponibilidad(int mess, int diaa, int cantidadNoches, int habitacion)
         {
             var mesElejido=octubre;
@@ -560,6 +561,7 @@ namespace HotelFinal
 
             return true; // Disponible
         }
+        //Funcion que valida segun el mes si un rango de fecha esta disponible para reservar
         static bool verificarDisponibilidad(bool[,] mess, int diaa, int cantidadNoches, int habitacion)
         {
            
@@ -631,6 +633,7 @@ namespace HotelFinal
 
             Console.ResetColor(); // Restaurar colores de consola.
         }
+        //Funcion para eliminar una reserva
         static void eliminarReserva()
         {
             Console.Clear();
@@ -723,6 +726,7 @@ namespace HotelFinal
 
             }
         }
+        //Funcion para mostrar la reservas Validando que hayan registros
         static bool mostrarReservas()
         {
             //Console.Clear();
@@ -744,6 +748,7 @@ namespace HotelFinal
             return true;
 
         }
+        //Funcion de sobrecarga para mostrar las reservas 
         static void mostrarReservas2()
         {
             //Console.Clear();
@@ -813,8 +818,10 @@ namespace HotelFinal
                 foreach (huesped guest in huespedes)
                 {
                     Console.WriteLine("  ");
-                    Console.ForegroundColor = ConsoleColor.Green;              
-                    Console.Write($"Nombre : {guest.NombreHuesped} ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($"Nombre : ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(guest.NombreHuesped) ;
                     Console.Write($"DNI : {guest.Dni} ");
                     Console.Write($"Mail: {guest.Mail} ");
                     Console.Write($"Numero de Habitacion: {guest.NumeroHabitacion} ");
@@ -829,6 +836,7 @@ namespace HotelFinal
                 Console.ResetColor();
             }
         }
+        //Funcion para buscar un Huesped por el DNI 
         static void buscarHuespedDni()
         {
             if (huespedes.Count > 0)
@@ -862,6 +870,7 @@ namespace HotelFinal
                 Console.ResetColor();
             }
         }
+        //Funcion para buscar un reserva por el DNI del Huesped
         static void buscarReservasDni()
         {
             if (reservas.Count > 0)
@@ -898,6 +907,7 @@ namespace HotelFinal
             }
 
         }
+        //Funcion para Modificar un reserva (UPDATE)
         static void modificarReserva()
         {
             ReservasStruct reservaModificacada = new ReservasStruct();
@@ -989,6 +999,7 @@ namespace HotelFinal
                 Console.ResetColor();
             }
         }
+        //Funcion para la validacion de entrada para un Long
         static bool validacionLong(string ingreso,out long dato)
         {
             bool validacion ;            
@@ -1003,6 +1014,7 @@ namespace HotelFinal
             return true;
            
         }
+        //Funcion para la validacion de entrada para un entero
         static int validacionInt(string ingreso, out int dato)
         {
             bool val = true;
@@ -1023,6 +1035,7 @@ namespace HotelFinal
             } while (!val);
             return dato;
         }
+        //Funcion para la validacion de entrada de una fecha
         static DateTime validacionDate(string ingreso, out DateTime dato)
         {
             bool val=true;
@@ -1041,6 +1054,7 @@ namespace HotelFinal
             } while (!val);
             return dato;
         }
+        //Funcion para mostrar un calendario de disponibilidad de acuerdo el mes
       static void mostrarDisponibilidad()
         {
             Console.Clear();
@@ -1071,6 +1085,7 @@ namespace HotelFinal
                     break;
             }
         }
+        //Funcion para Dibujar en consola El calendario para la Funcion mostrarDisponibilidad()
         static void dibujarCalendario(bool[,] mess)
         {
             char check = '\u2713';  // ✓
@@ -1092,7 +1107,7 @@ namespace HotelFinal
             for (int i = 0; i < mess.GetLength(0); i++)
             {
                 // Dibuja el número de día
-                Console.Write("  " + (i + 1).ToString("D2")  + " ");                
+                Console.Write("  " + (i + 1).ToString("D2") + " ");                
                 for (int j = 0; j < mess.GetLength(1); j++)
                 {
                     if (mess[i, j])
