@@ -566,7 +566,7 @@ namespace HotelFinal
         {
            
 
-            for (int i = diaa-1; i < diaa-1 + cantidadNoches; i++)
+            for (int i = diaa; i < diaa + cantidadNoches; i++)
             {
                 if (i > mess.GetLength(0) || mess[i - 1, habitacion - 1]) // Día fuera de rango o habitación ocupada
                 {
@@ -575,9 +575,9 @@ namespace HotelFinal
             }
 
             // Si pasa la validación, se marcan los días como ocupados
-            for (int i = diaa-1; i < (diaa-1) + cantidadNoches; i++)
+            for (int i = diaa; i < diaa+ cantidadNoches; i++)
             {
-                mess[i - 1, habitacion - 1] = true;
+                mess[i - 1, habitacion] = true;
             }
 
             return true; // Disponible
