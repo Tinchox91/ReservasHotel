@@ -5,3 +5,10 @@ C:\Users\tinch\OneDrive\Documentos\IDRA\PROGRAMACION\Integrador\HotelFinal\Hotel
 C:\Users\tinch\OneDrive\Documentos\IDRA\PROGRAMACION\Integrador\HotelFinal\HotelFinal\obj\Debug\HotelFinal.csproj.CoreCompileInputs.cache
 C:\Users\tinch\OneDrive\Documentos\IDRA\PROGRAMACION\Integrador\HotelFinal\HotelFinal\obj\Debug\HotelFinal.exe
 C:\Users\tinch\OneDrive\Documentos\IDRA\PROGRAMACION\Integrador\HotelFinal\HotelFinal\obj\Debug\HotelFinal.pdb
+C:\Users\Matt_\OneDrive\Desktop\TP PROGRA\ReservasHotel\HotelFinal\bin\Debug\HotelFinal.exe.config
+C:\Users\Matt_\OneDrive\Desktop\TP PROGRA\ReservasHotel\HotelFinal\bin\Debug\HotelFinal.exe
+C:\Users\Matt_\OneDrive\Desktop\TP PROGRA\ReservasHotel\HotelFinal\bin\Debug\HotelFinal.pdb
+C:\Users\Matt_\OneDrive\Desktop\TP PROGRA\ReservasHotel\HotelFinal\obj\Debug\HotelFinal.csproj.AssemblyReference.cache
+C:\Users\Matt_\OneDrive\Desktop\TP PROGRA\ReservasHotel\HotelFinal\obj\Debug\HotelFinal.csproj.CoreCompileInputs.cache
+C:\Users\Matt_\OneDrive\Desktop\TP PROGRA\ReservasHotel\HotelFinal\obj\Debug\HotelFinal.exe
+C:\Users\Matt_\OneDrive\Desktop\TP PROGRA\ReservasHotel\HotelFinal\obj\Debug\HotelFinal.pdb
