@@ -860,6 +860,7 @@ namespace HotelFinal
         //Funcion para buscar un Huesped por el DNI 
         static void buscarHuespedDni()
         {
+            bool encontrado = true;
             if (huespedes.Count > 0)
             {
                 mostrarHuespedes();
@@ -869,13 +870,16 @@ namespace HotelFinal
                 Console.ResetColor();
                 bool valDni = true;
                 long dniH;
+               
                 string ingresoDni;               
                 ingresoDni = Console.ReadLine();
                 validacionLong(ingresoDni, out dniH);                              
                 foreach (var hues in huespedes)
                 {
+                    
                     if (hues.Dni == dniH)
                     {
+                        encontrado = true;
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("DNI ENCONTRADO!");
                         Console.ResetColor();
@@ -895,21 +899,35 @@ namespace HotelFinal
                         Console.ResetColor();
                         Console.WriteLine(hues.Mail);
 
- 
+                        break;
                     }
+                    else
+                    {
+                        encontrado = false;
+                    }
+
                 }
                 Console.ResetColor();
+                
             }
+            
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No hay Registros");
                 Console.ResetColor();
             }
+            if (!encontrado)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Huesped No Encontrado");
+                Console.ResetColor();
+            }
         }
         //Funcion para buscar un reserva por el DNI del Huesped
         static void buscarReservasDni()
         {
+            bool encontrado = true;
             if (reservas.Count > 0)
             {
                 mostrarReservas();
@@ -918,7 +936,7 @@ namespace HotelFinal
                 Console.Write("Ingrese el DNI del huesped que desea buscar: ");
                 Console.ResetColor();
                 bool valDni = true;
-                long dniH;
+                long dniH;               
                 string ingresoDni;                
                 ingresoDni = Console.ReadLine();
                 validacionLong(ingresoDni, out dniH);              
@@ -927,6 +945,7 @@ namespace HotelFinal
                 {
                     if (res.DniHuesped == dniH)
                     {
+                        encontrado = true;
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         Console.WriteLine("DNI ENCONTRADO!");
                         Console.ResetColor();
@@ -956,9 +975,20 @@ namespace HotelFinal
                         Console.Write($"Cant de noches: ");
                         Console.ResetColor();
                         Console.WriteLine(res.CantidadNoches);
+                        break;
+                    }
+                    else
+                    {
+                        encontrado = false;
                     }
                 }
                 Console.ResetColor();
+                if (!encontrado)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Reserva No Encontrada");
+                    Console.ResetColor();
+                }
             }
             else
             {
