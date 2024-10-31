@@ -246,9 +246,9 @@ namespace HotelFinal
         //Funcion que ejecuta el codigo para la reserva segun el mes que se elije en un menu
         static void segunMes(bool[,] mesSelect, int numeroMes, int catDiasMes, int mes)
         {                     
-                        
+            //validacion dias            
             do
-            {
+            {//validar dias
                 Console.Write("Ingrese el día: ");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 diaV = Console.ReadLine();
@@ -268,7 +268,7 @@ namespace HotelFinal
             } while (!validarD);
 
             Console.ResetColor();
-
+            
             // validacion de noches:                    
 
             do
@@ -289,7 +289,7 @@ namespace HotelFinal
                 }
 
             } while (!valNoche);
-
+          
             do
             {
                 //validar numero de habitacion
@@ -315,8 +315,8 @@ namespace HotelFinal
 
                 } while (!valHabitacion);
 
-
-                disponibilidad = verificarDisponibilidad(mesSelect, dia, cantNoches, numeroHabitacion);
+               
+                disponibilidad = verificarDisponibilidad(mesSelect,dia,cantNoches,numeroHabitacion);                
                 if (disponibilidad)
                 {
                     idReserva++;
@@ -334,6 +334,60 @@ namespace HotelFinal
                     obtenerHabitacionesDisponibles(mesSelect, dia, cantNoches, numeroHabitacion);
                 }
             } while (!disponibilidad);
+        }
+        static bool verificarDisponibilidad2(int mess, int diaa, int cantidadNoches, int habitacion)
+        {
+            var mesElegido = octubre;
+            switch (mess)
+            {
+                case 1:
+                    mesElegido = octubre;
+                    break;
+                case 2:
+                    mesElegido = noviembre;
+                    break;
+                case 3:
+                    mesElegido = diciembre;
+                    break;
+            }
+
+            for (int i = diaa - 1; i < (diaa - 1) + cantidadNoches; i++)
+            {
+                if (i > mesElegido.GetLength(0) || mesElegido[i - 1, habitacion - 1]) // Día fuera de rango o habitación ocupada
+                {
+                    return false; // No disponible
+                }
+            }
+
+            // Si pasa la validación, se marcan los días como ocupados
+            for (int i = diaa; i < diaa + cantidadNoches; i++)
+            {
+                mesElegido[i - 1, habitacion - 1] = true;
+            }
+
+            return true; // Disponible
+        }
+        //Funcion que valida segun el mes si un rango de fecha esta disponible para reservar
+        static bool verificarDisponibilidad(bool[,] mess, int diaa, int cantidadNoches, int habitacion)
+        {
+            bool retorno = true;
+
+            for (int i = diaa; i < diaa + cantidadNoches; i++)
+            {
+                if (i > mess.GetLength(0) || mess[i - 1, habitacion - 1]) // Día fuera de rango o habitación ocupada
+                {
+                    retorno = false; // No disponible
+                }
+
+            }
+
+            // Si pasa la validación, se marcan los días como ocupados
+            for (int i = diaa; i < diaa + cantidadNoches; i++)
+            {
+                mess[i - 1, habitacion-1] = true;
+            }
+
+            return retorno; // Disponible
         }
         //Funcion que valida el ingreso de la cantidad de noches
         static bool validarNoche(string noche, int max, int dia)
@@ -518,59 +572,7 @@ namespace HotelFinal
             }
         }
         //Funcion de sobrecarga que valida el numero de mes el rango de fechas ingresado para reservar
-        static bool verificarDisponibilidad(int mess, int diaa, int cantidadNoches, int habitacion)
-        {
-            var mesElegido=octubre;
-            switch (mess)
-            {
-                case 1:
-                    mesElegido = octubre;
-                    break;
-                case 2:
-                    mesElegido = noviembre;
-                    break;
-                case 3:
-                    mesElegido = diciembre;
-                    break;   
-            }
-
-            for (int i = diaa - 1; i < (diaa-1) + cantidadNoches; i++)
-            {
-                if (i > mesElegido.GetLength(0) || mesElegido[i - 1, habitacion - 1]) // Día fuera de rango o habitación ocupada
-                {
-                    return false; // No disponible
-                }
-            }
-
-            // Si pasa la validación, se marcan los días como ocupados
-            for (int i = diaa; i < diaa + cantidadNoches; i++)
-            {
-                mesElegido[i - 1, habitacion - 1] = true;
-            }
-
-            return true; // Disponible
-        }
-        //Funcion que valida segun el mes si un rango de fecha esta disponible para reservar
-        static bool verificarDisponibilidad(bool[,] mess, int diaa, int cantidadNoches, int habitacion)
-        {
-           
-
-            for (int i = diaa; i < diaa + cantidadNoches; i++)
-            {
-                if (i > mess.GetLength(0) || mess[i - 1, habitacion - 1]) // Día fuera de rango o habitación ocupada
-                {
-                    return false; // No disponible
-                }
-            }
-
-            // Si pasa la validación, se marcan los días como ocupados
-            for (int i = diaa; i < diaa+ cantidadNoches; i++)
-            {
-                mess[i - 1, habitacion] = true;
-            }
-
-            return true; // Disponible
-        }
+       
 
         //  Función que retorna una lista de las habitaciones disponibles para un rango de días en un mes específico.
         static void obtenerHabitacionesDisponibles(bool[,] mess, int diaa, int cantidadNoches, int habitacion)
@@ -588,7 +590,7 @@ namespace HotelFinal
                 bool disponible = true;
 
                 // Verifica si la habitación está disponible en todos los días solicitados
-                for (int d = diaa-1; d < (diaa-1) + cantidadNoches; d++)
+                for (int d = diaa; d < diaa + cantidadNoches; d++)
                 {
                     if (d >= mess.GetLength(0) || mess[d - 1, h]) // Día fuera de rango o habitación ocupada
                     {
@@ -1039,6 +1041,7 @@ namespace HotelFinal
                 } while (!idEncontrado);
                 string[] opciones = new string[]
                 {
+                    "*****************************",
                 "1.Habitacion",
                 "2.Check-in",
                 "3.Cantidad de noches",
@@ -1055,20 +1058,20 @@ namespace HotelFinal
                         int dato;
                         entrada = Console.ReadLine();
                         reservaModificacada.NumeroHabitacion = validacionInt(entrada, out dato);
-                        verificarD = verificarDisponibilidad(reservaModificacada.CheckIn.Month, reservaModificacada.CheckIn.Day, reservaModificacada.CantidadNoches, reservaModificacada.NumeroHabitacion);
+                        verificarD = verificarDisponibilidad2(reservaModificacada.CheckIn.Month, reservaModificacada.CheckIn.Day, reservaModificacada.CantidadNoches, reservaModificacada.NumeroHabitacion);
                         break;
                     case 2:
                         Console.Write($"Fecha de entrada: {reservaModificacada.CheckIn.Day} / {reservaModificacada.CheckIn.Month} / {reservaModificacada.CheckIn.Year} Nuevo Dato: ");
                         entrada = Console.ReadLine();
                         DateTime fecha;
                         reservaModificacada.CheckIn = validacionDate(entrada, out fecha);
-                        verificarD = verificarDisponibilidad(reservaModificacada.CheckIn.Month, reservaModificacada.CheckIn.Day, reservaModificacada.CantidadNoches, reservaModificacada.NumeroHabitacion);
+                        verificarD = verificarDisponibilidad2(reservaModificacada.CheckIn.Month, reservaModificacada.CheckIn.Day, reservaModificacada.CantidadNoches, reservaModificacada.NumeroHabitacion);
                         break;
                     case 3:
                         Console.Write($"Noches: {reservaModificacada.CantidadNoches} Nuevo Dato: ");
                         entrada = Console.ReadLine();
                         reservaModificacada.CantidadNoches = validacionInt(entrada, out dato);
-                        verificarD = verificarDisponibilidad(reservaModificacada.CheckIn.Month, reservaModificacada.CheckIn.Day, reservaModificacada.CantidadNoches, reservaModificacada.NumeroHabitacion);
+                        verificarD = verificarDisponibilidad2(reservaModificacada.CheckIn.Month, reservaModificacada.CheckIn.Day, reservaModificacada.CantidadNoches, reservaModificacada.NumeroHabitacion);
                         break;
                     default:
                         break;
@@ -1142,6 +1145,7 @@ namespace HotelFinal
             Console.Clear();
             string[] opciones = new string[]
             {
+               
                 "1. Octubre",
                 "2. Noviembre",
                 "3. Diciembre"
